@@ -4,11 +4,13 @@
 </template>
 
 <script>
-
 export default {
-  name: 'home',
+  name: 'setting',
   data() {
     return {};
   },
 };
 </script>
+
+<style>
+</style>

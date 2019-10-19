@@ -1,14 +1,21 @@
 <template>
   <main>
+
   </main>
 </template>
 
 <script>
-
 export default {
-  name: 'home',
+  name: 'task-detail',
+  props: {
+    taskId: String,
+  },
   data() {
     return {};
   },
 };
 </script>
+
+<style>
+
+</style>

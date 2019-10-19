@@ -4,11 +4,15 @@
 </template>
 
 <script>
-
 export default {
-  name: 'home',
+  name: 'auth',
   data() {
-    return {};
+    return {
+    };
   },
 };
 </script>
+
+<style>
+
+</style>
