@@ -5,6 +5,7 @@ import Settings from '../views/Settings.vue';
 import TaskDetail from '../views/TaskDetail.vue';
 import Auth from '../views/Auth.vue';
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -19,9 +20,20 @@ const routes = [
     component: TaskDetail,
   },
   {
-    path: '/auth',
+    path: '/auth/login',
     name: 'auth',
     component: Auth,
+    props: {
+      inSignUpMode: false,
+    },
+  },
+  {
+    path: '/auth/signUp',
+    name: 'authSignup',
+    component: Auth,
+    props: {
+      inSignUpMode: true,
+    },
   },
   {
     path: '/settings',
