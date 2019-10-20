@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { addTask, editTask, getTasks } from '../api';
+import {
+  addTask, editTask, getTasks, getSeries,
+} from '../api';
 import { validateTask } from '../api/task-utils';
 // import {
 //   ADD_TASK_MUTATION,
@@ -14,6 +16,7 @@ Vue.use(Vuex);
 const ADD_TASK_MUTATION = 'addTask';
 const EDIT_TASK_MUTATION = 'editTask';
 const SET_TASKS_MUTATION = 'setTasks';
+const SET_SERIES_MUTATION = 'setSeries';
 // const UPDATE_TASK_MUTATION = 'updateTask';
 const DELETE_TASK_MUTATION = 'deleteTask';
 
@@ -25,6 +28,7 @@ const DELETE_TASK_MUTATION = 'deleteTask';
 export default new Vuex.Store({
   state: {
     tasks: [], // All tasks from the user
+    series: [],
   },
   getters: {
     taskById(state, taskId) {
@@ -53,6 +57,9 @@ export default new Vuex.Store({
     [SET_TASKS_MUTATION](state, tasks) {
       // TODO: Update differences
       Object.assign(state.tasks, tasks);
+    },
+    [SET_SERIES_MUTATION](state, series) {
+      Object.assign(state.series, series);
     },
   },
   actions: {
@@ -85,6 +92,14 @@ export default new Vuex.Store({
         commit(DELETE_TASK_MUTATION, taskId);
       } catch (e) {
         console.error(e);
+      }
+    },
+    async loadSeries({ commit }) {
+      try {
+        const series = await getSeries();
+        commit(SET_SERIES_MUTATION, series);
+      } catch (e) {
+        console.error('Error when loading series', e);
       }
     },
   },

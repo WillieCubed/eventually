@@ -1,7 +1,8 @@
 <template>
   <div class = "tasks">
     <h1>Tasks</h1>
-    <taskBlock v-for='task in tasks' v-bind:key="task" :name = "task.title"  draggable="true"></taskBlock>
+    <taskBlock v-for='task in tasks' v-bind:key="task"
+    :name = "task.title"  draggable="true"></taskBlock>
   </div>
 </template>
 <script>

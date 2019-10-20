@@ -18,6 +18,9 @@ export default {
     calender: Calender,
     tasks: Tasks,
   },
+  mounted() {
+    this.$store.dispatch('loadSeries');
+  },
   data() {
     return {
       tasks: [

@@ -28,9 +28,11 @@
     <div class = timeBlock><p>11:00 pm</p></div>
   </div>
   <dayColumn></dayColumn>
-  <seriesContainer v-for='series in seriescontainer' :key = 'series.id' :name = "series.title" :end ="series.endTime" :start ="series.startTime"
+  <seriesContainer v-for='series in seriescontainer' :key = 'series.id'
+  :name = "series.title" :end ="series.endTime" :start ="series.startTime"
   :tasks = "series.tasks"></seriesContainer>
-  <tasklessSeriesContainer v-for='taskless in tasklessSeriesContainer' :key = 'taskless.id' :name = "taskless.title"
+  <tasklessSeriesContainer v-for='taskless in tasklessSeriesContainer' :key = 'taskless.id'
+  :name = "taskless.title"
   :end = "taskless.endTime" :start = "taskless.startTime"></tasklessSeriesContainer>
 </div>
 </template>

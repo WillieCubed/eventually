@@ -3,6 +3,7 @@ import firebase from 'firebase';
 const db = firebase.firestore();
 
 const PATH_TASKS = 'tasks';
+const PATH_SERIES = 'series';
 
 async function addTask(task) {
   const result = await db.collection(PATH_TASKS).add(task);
@@ -42,10 +43,19 @@ async function searchTasks({ query }) {
   return matchingTasks;
 }
 
+async function getSeries(userId) {
+  const docs = await db.collection(PATH_SERIES)
+    .where('owner', '==', userId)
+    .get();
+  const series = docs.docs.map(doc => doc.data());
+  return series;
+}
+
 export {
   addTask,
   editTask,
   getTasks,
   deleteTask,
   searchTasks,
+  getSeries,
 };
