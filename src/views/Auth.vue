@@ -30,7 +30,6 @@ export default {
     return {
       email: '',
       password: '',
-      signUp: false,
     };
   },
   methods: {
