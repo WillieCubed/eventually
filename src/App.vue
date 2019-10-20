@@ -1,7 +1,15 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+<div id="app">
+  <router-view></router-view>
+</div>
+  <!-- <v-app> -->
+    <!-- <v-navigation-drawer-app></v-navigation-drawer-app> -->
+    <!-- <v-app-bar app>Eventually</v-app-bar>
+    <v-content>
+      <v-container fluid> -->
+      <!-- </v-container>
+    </v-content>
+  </v-app> -->
 </template>
 
 <style lang="scss">

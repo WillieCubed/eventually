@@ -73,10 +73,12 @@ export default new Vuex.Store({
     },
     async loadTasks({ commit }) {
       try {
-        const tasks = await getTasks();
+        const tasks = await getTasks('test');
         commit(SET_TASKS_MUTATION, tasks);
+        return tasks;
       } catch (e) {
         console.error('Error when loading tasks', e);
+        throw e;
       }
     },
     async editTask({ commit }, { id, newTask }) {
@@ -96,11 +98,16 @@ export default new Vuex.Store({
     },
     async loadSeries({ commit }) {
       try {
-        const series = await getSeries();
+        const series = await getSeries('test');
         commit(SET_SERIES_MUTATION, series);
+        return series;
       } catch (e) {
         console.error('Error when loading series', e);
+        throw e;
       }
     },
   },
+  // modules: {
+  //   auth:
+  // }
 });

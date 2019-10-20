@@ -47,14 +47,14 @@ export default {
 };
 </script>
 <style>
-  div.seriesContainer{
-    display: block;
-      position:absolute;
-      padding:2px;
-      width:80px;
-      background-color:dodgerblue;
-      left:82px;
-      font-size: 8pt;
-      text-align:left;
-  }
-</style>"
+div.seriesContainer{
+  display: block;
+  position:absolute;
+  padding:2px;
+  width:80px;
+  background-color:dodgerblue;
+  left:82px;
+  font-size: 8px;
+  text-align:left;
+}
+</style>

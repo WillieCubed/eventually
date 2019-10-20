@@ -37,7 +37,8 @@ async function deleteTask(taskId) {
 async function searchTasks({ query }) {
   let firestoreQuery = db.collection('PATH_TASKS');
   for (let i = 0; i < query.length; i += 1) {
-    firestoreQuery = firestoreQuery.where('title', '==', query.substr(0, i));
+    console.log(query.substring(0, i));
+    firestoreQuery = firestoreQuery.where('title', '==', query.substring(0, i));
   }
   const matchingTasks = await firestoreQuery.get();
   return matchingTasks;
