@@ -8,7 +8,11 @@
       <input type="text" placeholder="Password" v-model="password" />
       <br />
       <br />
-      <button v-on:click="login">Login</button>
+      <button v-if="inSignUpMode" v-on:click="signup">Sign Up</button>
+      <button v-else v-on:click="login">Login</button>
+      <br /><br />
+      <button v-if="inSignUpMode" v-on:click="changeToLogin">Go to Login</button>
+      <button v-else v-on:click="changeToSignUp">Go to Sign Up</button>
     </div>
   </main>
 </template>
@@ -29,13 +33,14 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
 export default {
   name: 'auth',
+  props: { inSignUpMode: Boolean },
   data() {
     return {
       email: '',
       password: '',
+      signUp: false,
     };
   },
   methods: {
@@ -49,6 +54,22 @@ export default {
       } catch (e) {
         console.error(e);
       }
+    },
+    async signup() {
+      try {
+        const credential = await firebase.auth()
+          .createUserWithEmailAndPassword(this.email, this.password);
+        console.log(credential.user.email);
+        this.$router.push({ path: '/' });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    changeToLogin() {
+      this.$router.push('/auth/login');
+    },
+    changeToSignUp() {
+      this.$router.push('/auth/signUp');
     },
   },
 };
