@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { Paper } from '@material-ui/core';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { Task } from '../store/tasks/types';
 import { CalendarBlock as CalendarBlockType } from '../store/events';
@@ -99,7 +100,7 @@ interface EventuallyCalendarState {
 /**
  * The main calendar UI.
  */
-export default class EventuallyCalendar extends React.Component<EventuallyCalendarProps, EventuallyCalendarState> {
+class EventuallyCalendar extends React.Component<EventuallyCalendarProps, EventuallyCalendarState> {
 
   constructor(props: any) {
     super(props);
@@ -127,3 +128,11 @@ export default class EventuallyCalendar extends React.Component<EventuallyCalend
     );
   }
 }
+
+const mapState = (state: any) => state;
+
+const actionCreators = {
+
+};
+
+export default connect(mapState, actionCreators)(EventuallyCalendar);

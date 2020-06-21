@@ -5,10 +5,10 @@ import './App.css';
 
 function App() {
   return (
-    <div id="app">
+    <React.Fragment>
       <EventuallyAppBar></EventuallyAppBar>
       <EventuallyCalendar></EventuallyCalendar>
-    </div>
+    </React.Fragment>
   );
 }
 
