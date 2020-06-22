@@ -1,14 +1,5 @@
-import { configureStore, combineReducers, createAction } from '@reduxjs/toolkit';
-
-const ACTION_ADD_TASK = 'ADD_TASK';
-
-const ACTION_REMOVE_TASK = 'REMOVE_TASK';
-
-
-export const addTask = createAction<string>(ACTION_ADD_TASK);
-
-export const removeTask = createAction<string>(ACTION_REMOVE_TASK);
-
+import { configureStore, combineReducers, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { tasksReducer } from './tasks/reducers';
 
 function calendarsReducer(calendars = [], action: any) {
   switch (action.type) {
@@ -18,8 +9,8 @@ function calendarsReducer(calendars = [], action: any) {
 }
 
 const rootReducer = combineReducers({
-  // tasks: tasksReducer,
-  calendars: calendarsReducer,
+  tasksReducer,
+  calendarsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
