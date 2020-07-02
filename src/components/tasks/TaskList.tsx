@@ -1,71 +1,13 @@
 import React, { SyntheticEvent } from 'react';
-import { connect, ConnectedProps, AnyIfEmpty } from 'react-redux';
-import { IconButton, Toolbar, Typography, Dialog, TextField, Paper, InputBase } from '@material-ui/core';
-import { Add as AddIcon, Delete as DeleteIcon } from '@material-ui/icons';
+import { connect, ConnectedProps } from 'react-redux';
+import { IconButton, Toolbar, Paper, InputBase } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import { RootState } from '../../store';
 import { Task, NewTask } from '../../store/tasks/types';
-import { addTask, updateTask, removeTask } from '../../store/tasks/actions';
+import { addTask, updateTask, removeTask } from '../../store/tasks/slices';
+import { refreshTasks } from '../../store/tasks/thunks';
+import TaskCard  from './TaskCard';
 import './TaskList.css';
-
-/**
- * A generic callback for peforming an action for a Task.
- */
-type TaskCallback = (id: string) => void;
-
-/**
- * A callback to handle changes in TaskCard position.
- */
-type TaskMoveCallback = (oldIndex: number, newIndex: number) => void & TaskCallback;
-
-interface TaskCardProps {
-
-  /**
-   * The task to display information.
-   */
-  task: Task;
-
-  /**
-   * Called when a TaskCard deletion button is clicked.
-   */
-  handleDelete?: TaskCallback,
-
-  /**
-   * Called when a TaskCard is moved.
-   */
-  handleMove?: TaskMoveCallback,
-}
-
-function TaskCard(props: TaskCardProps) {
-  const attachments = props.task.attachments?.map(attachment => (
-    <div className="task-attachment">
-      {attachment}
-    </div>
-  ));
-  const handleDeleteClick = (event: any) => {
-    event.preventDefault();
-    const taskId = props.task.id;
-    if (props.handleDelete) {
-      props.handleDelete(taskId);
-    }
-  }
-  return (
-    <div className="task-card">
-      <div>
-        <div>
-          <h1>{props.task.title}</h1>
-          <p>{props.task.description}</p>
-        </div>
-        <IconButton type="submit" aria-label="Remove Task" onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </IconButton>
-      </div>
-      <div className="task-attachments">
-        {attachments}
-        {/* TODO: Inline block */}
-      </div>
-    </div>
-  )
-}
 
 type HandleTaskCreatedCallback = (task: NewTask) => void;
 
@@ -87,7 +29,7 @@ class TaskListForm extends React.Component<TaskListFormProps, { title: string }>
   private handleChange(event: any) {
     this.setState({
       title: event.target.value,
-    })
+    });
   }
 
   private handleSubmit(event: SyntheticEvent) {
@@ -122,7 +64,7 @@ class TaskListForm extends React.Component<TaskListFormProps, { title: string }>
 }
 
 
-interface TaskListProps extends PropsFromRedux {
+interface TaskListProps extends TaskListReduxProps {
 
   /**
    * The tasks to display in a {@link TaskList}
@@ -139,6 +81,12 @@ interface TaskListProps extends PropsFromRedux {
  * A sidebar that renders all the user's tasks.
  */
 class EventuallyTaskList extends React.Component<TaskListProps> {
+  
+  private refreshTasks = () => {
+    // TODO: Show loading 
+    this.props.refreshTasks();
+  }
+  
   public render() {
     const tasks = this.props.tasks.map(task => (
       <TaskCard key={task.id} task={task} handleDelete={this.props.removeTask}></TaskCard>
@@ -160,8 +108,7 @@ class EventuallyTaskList extends React.Component<TaskListProps> {
 const mapStateToProps = (state: RootState) => {
   console.log(state);
   return {
-    tasks: state.tasksReducer.tasks,
-    enabled: true, // TODO: Change to component-specific prop
+    tasks: state.tasks,
   };
 };
 
@@ -169,11 +116,12 @@ const mapDispatch = {
   addTask,
   updateTask,
   removeTask,
+  refreshTasks,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+type TaskListReduxProps = ConnectedProps<typeof connector>;
 
 const ConnectedTaskList = connector(EventuallyTaskList);
 

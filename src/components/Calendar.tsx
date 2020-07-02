@@ -1,11 +1,12 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { Paper } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { Task } from '../store/tasks/types';
-import { CalendarBlock as CalendarBlockType } from '../store/events';
+import { CalendarBlock as CalendarBlockType } from '../store/calendar/types';
+import { addTask, } from '../store/tasks/slices';
 import './Calendar.css';
+import { RootState } from '../store';
 
 interface CalendarBlockProps {
 
@@ -94,7 +95,16 @@ interface EventuallyCalendarProps {
 }
 
 interface EventuallyCalendarState {
+
+  /**
+   * 
+   */
   blocks: CalendarBlockType[];
+
+  /**
+   * 
+   */
+  currentTime: Date;
 }
 
 /**
@@ -102,14 +112,50 @@ interface EventuallyCalendarState {
  */
 class EventuallyCalendar extends React.Component<EventuallyCalendarProps, EventuallyCalendarState> {
 
+  private timerId: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
       blocks: [],
+      currentTime: new Date(),
     };
+  }
+  
+  private displayEvents = () => {
+
+  };
+
+  public componentDidMount() {
+    this.timerId = setInterval(() => {
+      this.tick();
+    },
+    1000); // TODO: Make timer interval changeable
+  }
+
+  private tick() {
+    this.setState({
+      ...this.state,
+      currentTime: new Date(),
+    });
+  }
+
+  public componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
+
+  private loadDays(): CalendarDay[] {
+    const startDate = new Date();
+    return [];
   }
 
   public render() {
+    const days = this.loadDays();
+    const dayBlocks = days.map(day => (
+      <Grid item key={day.date.getUTCMilliseconds()}>
+        <CalendarDay date={new Date()} blocks={this.state.blocks}></CalendarDay>
+      </Grid>
+    ));
     return (
       <Container>
         <section>
@@ -117,11 +163,7 @@ class EventuallyCalendar extends React.Component<EventuallyCalendarProps, Eventu
         </section>
         <main>
           <Grid container spacing={0}>
-            {[0, 1, 2, 3].map(value => (
-              <Grid item key={value}>
-                <CalendarDay date={new Date()} blocks={this.state.blocks}>{value}</CalendarDay>
-              </Grid>
-            ))}
+            {dayBlocks}
           </Grid>
         </main>
       </Container>
@@ -129,10 +171,16 @@ class EventuallyCalendar extends React.Component<EventuallyCalendarProps, Eventu
   }
 }
 
-const mapState = (state: any) => state;
+const mapState = (state: RootState) => ({
+  events: state.events,
+});
 
 const actionCreators = {
-
+  addTask,
 };
 
-export default connect(mapState, actionCreators)(EventuallyCalendar);
+const connector = connect(mapState, actionCreators);
+
+const ConnectedCalendar = connector(EventuallyCalendar);
+
+export default ConnectedCalendar;

@@ -4,7 +4,11 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { initializeFirebase } from './firebase';
 import store from './store';
+
+initializeFirebase();
+
 
 ReactDOM.render(
   <React.StrictMode>

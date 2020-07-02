@@ -23,9 +23,16 @@ let firebaseInitialized = false;
  * 
  * This initializes Firebase if it hasn't been initialized yet.
  */
-export function getFirebaseApp() {
-  if (firebaseInitialized) {
-    return firebase.app();
-  }
-  return firebase.initializeApp(firebaseConfig);
+// export function getFirebaseApp() {
+//   if (firebaseInitialized) {
+//     return firebase.app();
+//   }
+//   return firebase.initializeApp(firebaseConfig);
+// }
+
+/**
+ * Must be called exactly once at the beginning of the app lifecycle.
+ */
+export function initializeFirebase() {
+  firebase.initializeApp(firebaseConfig);
 }
