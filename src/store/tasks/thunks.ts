@@ -1,12 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import {  } from '../../firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { AppDispatch, RootState  } from '..';
 import { Task } from './types';
-import { addTask } from './slices';
-
-const db = firebase.firestore();
+import { addTask } from './slices'; 
 
 /**
  * An async thunk to fetch all tasks for the currently signed in user.
@@ -28,6 +25,7 @@ export const refreshTasks = createAsyncThunk<
     if (!userId) {
       return;
     }
+    const db = firebase.firestore();    
     const snap = await db.collection(`users/${userId}/tasks`).get();
     const tasks = snap.docs.map(doc => doc.data() as Task);
     // TODO: Fetch local copy first
