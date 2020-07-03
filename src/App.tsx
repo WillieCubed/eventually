@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import EventuallyAppBar from './components/EventuallyAppBar';
 import EventuallyCalendar from './components/Calendar'; 
 import TaskList from './components/tasks/TaskList'; 
@@ -10,7 +10,7 @@ function App() {
       <EventuallyAppBar></EventuallyAppBar>
       <div className="content-container">
         <EventuallyCalendar></EventuallyCalendar>
-        <TaskList></TaskList>
+        <TaskList enabled={true} />
       </div>
     </React.Fragment>
   );
